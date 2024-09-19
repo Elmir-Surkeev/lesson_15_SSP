@@ -1,9 +1,1 @@
-[
-  {
-    "win": 0,
-    "defeats":0,
-    "draw": 0,
-    "all_mathes":0,
-    "win_percentage": 0
-  }
-]
+[{"name":"Elmir","score":2,"defeats":3,"draw":3,"all_mathes":8,"win_persentage":0}]

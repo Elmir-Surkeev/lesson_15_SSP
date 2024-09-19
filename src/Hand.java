@@ -5,7 +5,6 @@ import java.util.Set;
 enum Hand{
     ROCK, SCISSORS, PAPER, LIZARD, SPOK;
 
-
     private static Map<Hand, Set<Hand>> beatsMap = Map.of(
             ROCK, Set.of(SCISSORS),
             SCISSORS, Set.of(PAPER),
