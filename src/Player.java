@@ -3,6 +3,32 @@ public abstract class Player {
     private int score;
     private int defeats;
     private int draw;
+    private int all_mathes;
+    private int win_persentage;
+    public Player() {}
+    public Computer[] setScore(int score) {
+        this.score = score;
+        return new Computer[0];
+    }
+
+    Hand lastHand = null;
+
+    Player(String name){
+        this.name = name;
+    }
+
+    void reset(){
+        score = 0;
+        lastHand = null;
+    }
+
+    Hand drawHand(){
+        lastHand = selectHand();
+        return lastHand;
+    }
+
+    protected abstract Hand selectHand();
+
 
     public void setName(String name) {
         this.name = name;
@@ -24,9 +50,6 @@ public abstract class Player {
         this.win_persentage = win_persentage;
     }
 
-    private int all_mathes;
-    private int win_persentage;
-    public Player() {}
     public String getName() {
         return name;
     }
@@ -34,12 +57,6 @@ public abstract class Player {
     public int getScore() {
         return score;
     }
-
-    public Computer[] setScore(int score) {
-        this.score = score;
-        return new Computer[0];
-    }
-
     public int getDefeats() {
         return defeats;
     }
@@ -63,24 +80,6 @@ public abstract class Player {
     public void setLastHand(Hand lastHand) {
         this.lastHand = lastHand;
     }
-
-    Hand lastHand = null;
-
-    Player(String name){
-        this.name = name;
-    }
-
-    void reset(){
-        score = 0;
-        lastHand = null;
-    }
-
-    Hand drawHand(){
-        lastHand = selectHand();
-        return lastHand;
-    }
-
-    protected abstract Hand selectHand();
 
 
     @Override

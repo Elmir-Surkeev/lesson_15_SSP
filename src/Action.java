@@ -3,38 +3,33 @@ import java.util.*;
 
 public class Action {
     static Hand fromInt(int choice) {
-        switch (choice) {
-            case 1:
-                return Hand.ROCK;
-            case 2:
-                return Hand.SCISSORS;
-            case 3:
-                return Hand.PAPER;
-            case 4:
-                return Hand.LIZARD;
-            case 5:
-                return Hand.SPOK;
-            default:
-                throw new IllegalArgumentException("Неверный выбор: " + choice);
-        }
+            switch (choice) {
+                case 1:
+                    return Hand.ROCK;
+                case 2:
+                    return Hand.SCISSORS;
+                case 3:
+                    return Hand.PAPER;
+                case 4:
+                    return Hand.LIZARD;
+                case 5:
+                    return Hand.SPOK;
+                default:
+                    throw new IllegalArgumentException("Неверный выбор: " + choice);
+            }
     }
-    public static void addScore(){
-        Player[] player = JSONFileHandler.getPlayer();
-        boolean isUpdated = false;
-
+    public static void addScore(boolean isUpdated, Player[] player){
         for (Player t : player) {
             if (t.getName().equals("Elmir"))
                 t.setScore(t.getScore()+1);
                 isUpdated = true;
                 break;
         }
-        if (isUpdated == true){
+        if (isUpdated){
             JSONFileHandler.writePlayer((Computer[]) player);
         }
     }
-    public static void addDefeats(){
-        Player[] player = JSONFileHandler.getPlayer();
-        boolean isUpdated = false;
+    public static void addDefeats(boolean isUpdated, Player[] player){
 
         for (Player t : player) {
             if (t.getName().equals("Elmir"))
@@ -42,13 +37,11 @@ public class Action {
             isUpdated = true;
             break;
         }
-        if (isUpdated == true){
+        if (isUpdated){
             JSONFileHandler.writePlayer((Computer[]) player);
         }
     }
-    public static void addDraw(){
-        Player[] player = JSONFileHandler.getPlayer();
-        boolean isUpdated = false;
+    public static void addDraw(boolean isUpdated, Player[] player){
 
         for (Player t : player) {
             if (t.getName().equals("Elmir"))
@@ -56,13 +49,11 @@ public class Action {
             isUpdated = true;
             break;
         }
-        if (isUpdated == true){
+        if (isUpdated){
             JSONFileHandler.writePlayer((Computer[]) player);
         }
     }
-    public static void addAllMathes(){
-        Player[] player = JSONFileHandler.getPlayer();
-        boolean isUpdated = false;
+    public static void addAllMathes(boolean isUpdated, Player[] player){
 
         for (Player t : player) {
             if (t.getName().equals("Elmir"))
@@ -70,7 +61,7 @@ public class Action {
             isUpdated = true;
             break;
         }
-        if (isUpdated == true){
+        if (isUpdated){
             JSONFileHandler.writePlayer((Computer[]) player);
         }
     }
@@ -82,28 +73,34 @@ public class Action {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Выберите: \n1 - ROCK\n2 - SCISSORS\n3 - PAPER\n4 - LIZARD\n5 - SPOK");
 
-            int choice = scanner.nextInt();
             try {
+                Player[] players = JSONFileHandler.getPlayer();
+                int choice = scanner.nextInt();
+                boolean isUpdated = false;
                 Hand userHand = fromInt(choice);
                 Hand computerHand = Hand.random();
 
                 if (userHand.beats(computerHand)){
                     System.out.printf("%s победил %s ", userHand.name(), computerHand.name());
                     System.out.println("\n Вы победили компьютер");
-                    addScore();
-                    addAllMathes();
+                    addScore(isUpdated,player);
+                    addAllMathes(isUpdated, player);
                 }else if(computerHand.beats(userHand)){
                     System.out.printf("%s победил %s ", computerHand.name(), userHand.name());
                     System.out.println("\n Компьютер победил вас");
-                    addDefeats();
-                    addAllMathes();
+                    addDefeats(isUpdated, player);
+                    addAllMathes(isUpdated, player);
                 }else {
                     System.out.printf("%s ничья %s ", computerHand.name(), userHand.name());
                     System.out.println("\n Ничья");
-                    addDraw();
-                    addAllMathes();
+                    addDraw(isUpdated, player);
+                    addAllMathes(isUpdated, player);
                 }
+            }catch (InputMismatchException e ) {
+                System.out.println("Ошибка вы ввели текст");
             }catch (IllegalArgumentException e){
+                System.out.println("Метод возвращает недопустимый аргумент или ввод чисел не корректный");
+            }catch (Exception e){
                 e.getMessage();
             }
         }
